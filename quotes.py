@@ -3,6 +3,7 @@ from ctypes import *
 import re
 import datetime
 import sys
+import os
 
 RED = 12
 GREEN = 10
@@ -25,9 +26,14 @@ month_to_int = {
     'Dec':12
 }
 def set_color(color):
-    windll.Kernel32.GetStdHandle.restype = c_ulong
-    h = windll.Kernel32.GetStdHandle(c_ulong(0xfffffff5))
-    windll.Kernel32.SetConsoleTextAttribute(h, color)
+	#mac or linux
+	if os.name == "posix":
+		pass
+	#windows
+	else:
+		windll.Kernel32.GetStdHandle.restype = c_ulong
+		h = windll.Kernel32.GetStdHandle(c_ulong(0xfffffff5))
+		windll.Kernel32.SetConsoleTextAttribute(h, color)
 
 class Symbol:
     def __init__(self, symbol):
